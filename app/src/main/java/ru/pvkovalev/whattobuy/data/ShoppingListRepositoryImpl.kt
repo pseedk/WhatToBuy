@@ -10,6 +10,13 @@ object ShoppingListRepositoryImpl : ShoppingListRepository {
 
     private var autoincrementId = 0
 
+    init {
+        for (i in 0 until 10) {
+            val item = ShoppingItem("Name $i", i, true)
+            addShoppingItem(item)
+        }
+    }
+
     override fun addShoppingItem(shoppingItem: ShoppingItem) {
         if (shoppingItem.id == ShoppingItem.UNDEFINED_ID) {
             shoppingItem.id = autoincrementId++
