@@ -1,11 +1,14 @@
 package ru.pvkovalev.whattobuy.data
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import ru.pvkovalev.whattobuy.domain.ShoppingItem
 import ru.pvkovalev.whattobuy.domain.ShoppingListRepository
 import java.lang.RuntimeException
 
 object ShoppingListRepositoryImpl : ShoppingListRepository {
 
+    private val shoppingListLiveData = MutableLiveData<List<ShoppingItem>>()
     private val shoppingList = mutableListOf<ShoppingItem>()
 
     private var autoincrementId = 0
@@ -22,10 +25,12 @@ object ShoppingListRepositoryImpl : ShoppingListRepository {
             shoppingItem.id = autoincrementId++
         }
         shoppingList.add(shoppingItem)
+        updateList()
     }
 
     override fun deleteShoppingItem(shoppingItem: ShoppingItem) {
         shoppingList.remove(shoppingItem)
+        updateList()
     }
 
     override fun editShoppingItem(shoppingItem: ShoppingItem) {
@@ -40,7 +45,11 @@ object ShoppingListRepositoryImpl : ShoppingListRepository {
         } ?: throw RuntimeException("Element with id $shoppingItemId not found")
     }
 
-    override fun getShoppingList(): List<ShoppingItem> {
-        return shoppingList.toList()
+    override fun getShoppingList(): LiveData<List<ShoppingItem>> {
+        return shoppingListLiveData
+    }
+
+    private fun updateList() {
+        shoppingListLiveData.value = shoppingList.toList()
     }
 }
