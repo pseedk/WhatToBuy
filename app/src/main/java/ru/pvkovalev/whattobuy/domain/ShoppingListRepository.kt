@@ -1,5 +1,7 @@
 package ru.pvkovalev.whattobuy.domain
 
+import androidx.lifecycle.LiveData
+
 interface ShoppingListRepository {
 
     fun addShoppingItem(shoppingItem: ShoppingItem)
@@ -10,5 +12,5 @@ interface ShoppingListRepository {
 
     fun getShoppingItem(shoppingItemId: Int): ShoppingItem
 
-    fun getShoppingList(): List<ShoppingItem>
+    fun getShoppingList(): LiveData<List<ShoppingItem>>
 }
