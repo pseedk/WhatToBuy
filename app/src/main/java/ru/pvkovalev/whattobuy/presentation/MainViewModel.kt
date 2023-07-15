@@ -10,11 +10,11 @@ import ru.pvkovalev.whattobuy.domain.ShoppingItem
 
 class MainViewModel : ViewModel() {
 
-    val repository = ShoppingListRepositoryImpl
+    private val repository = ShoppingListRepositoryImpl
 
-    val getShoppingListUseCase = GetShoppingListUseCase(repository)
-    val deleteShoppingItemUseCase = DeleteShoppingItemUseCase(repository)
-    val editShoppingItemUseCase = EditShoppingItemUseCase(repository)
+    private val getShoppingListUseCase = GetShoppingListUseCase(repository)
+    private val deleteShoppingItemUseCase = DeleteShoppingItemUseCase(repository)
+    private val editShoppingItemUseCase = EditShoppingItemUseCase(repository)
 
     val shoppingList = getShoppingListUseCase.getShoppingList()
 
